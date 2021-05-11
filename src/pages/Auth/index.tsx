@@ -14,7 +14,6 @@ import {
   useDisclosure,
   ModalBody,
   ModalFooter,
-  Text,
 } from '@chakra-ui/react'
 import {useAuth} from '../../contexts/AuthContext'
 import logoDark from '../../img/logo.png'
