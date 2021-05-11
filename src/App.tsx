@@ -1,26 +1,52 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {FC} from 'react'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from 'react-router-dom'
+import {Home, Auth} from './pages'
+import {useAuth} from './contexts/AuthContext'
 
-function App() {
+const App: FC = () => {
+  const {user} = useAuth()
+
+  const PrivateRoute: FC<{
+    component: FC
+    path: string
+    exact: boolean
+  }> = props =>
+    user ? (
+      <Route
+        path={props.path}
+        exact={props.exact}
+        component={props.component}
+      />
+    ) : (
+      <Redirect to='/' />
+    )
+  const NoUserRoute: FC<{
+    component: FC
+    path: string
+    exact: boolean
+  }> = props =>
+      !user ? (
+          <Route
+              path={props.path}
+              exact={props.exact}
+              component={props.component}
+          />
+      ) : (
+          <Redirect to='/home' />
+      )
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Router>
+      <Switch>
+        <PrivateRoute component={Home} path='/home' exact={true} />
+        <NoUserRoute component={Auth} path='/' exact={true} />
+      </Switch>
+    </Router>
+  )
 }
 
-export default App;
+export default App
