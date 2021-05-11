@@ -28,7 +28,7 @@ const NewKeep: FC = () => {
   const {isOpen, onToggle, onClose} = useDisclosure()
   const toast = useToast()
   return (
-    <form style={{width: '100%'}}>
+    <>
       <Box
         minWidth='270px'
         width='50%'
@@ -52,22 +52,7 @@ const NewKeep: FC = () => {
           <LockIcon />
         </Box>
       </Box>
-      <Modal
-        isOpen={isOpen}
-        onClose={() => {
-          toast({
-            title: 'Новая заметка удалена',
-            status: 'info',
-            variant: 'subtle',
-            position: 'bottom-left',
-          })
-          onClose()
-        }}
-        isCentered
-        closeOnOverlayClick={true}
-        blockScrollOnMount={true}
-        size='2xl'
-      >
+      <Modal isOpen={isOpen} onClose={onClose} size='2xl'>
         <ModalOverlay />
         <ModalContent borderRadius='2px'>
           <ModalHeader>
@@ -156,7 +141,7 @@ const NewKeep: FC = () => {
           </ModalBody>
         </ModalContent>
       </Modal>
-    </form>
+    </>
   )
 }
 
