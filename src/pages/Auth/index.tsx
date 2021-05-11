@@ -1,5 +1,21 @@
 import React, {useState} from 'react'
-import {Box, Button, Flex, Heading, Image, useColorMode} from '@chakra-ui/react'
+import {
+  Box,
+  Button,
+  Flex,
+  Heading,
+  Image,
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
+  ModalCloseButton,
+  useColorMode,
+  useDisclosure,
+  ModalBody,
+  ModalFooter,
+  Text,
+} from '@chakra-ui/react'
 import {useAuth} from '../../contexts/AuthContext'
 import logoDark from '../../img/logo.png'
 import logoLight from '../../img/logoLight.png'
@@ -7,18 +23,20 @@ import logoLight from '../../img/logoLight.png'
 const Auth = () => {
   const {login} = useAuth()
   const {colorMode} = useColorMode()
+  const {isOpen, onClose, onToggle} = useDisclosure()
   const [loading, setLoading] = useState(false)
   return (
     <Box
       minWidth={270}
-      w={500}
+      maxWidth={500}
+      p={10}
       h={300}
       mx='auto'
       mt='200px'
       shadow='2xl'
       borderRadius='2px'
     >
-      <Flex alignItems='center' p='2' w='100%' justifyContent='center'>
+      <Flex alignItems='center' w='100%' justifyContent='center'>
         <Box>
           {colorMode === 'light' ? (
             <Image src={logoDark} />
@@ -47,7 +65,30 @@ const Auth = () => {
         >
           Войти с Google
         </Button>
+        <Button onClick={onToggle}>open modal</Button>
       </Flex>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Modal Title</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Text>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem,
+              dolores excepturi expedita fuga laboriosam necessitatibus nobis
+              perspiciatis provident rem sed! At corporis laboriosam
+              perspiciatis provident quasi ratione sit temporibus, ut?
+            </Text>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme='blue' mr={3} onClick={onClose}>
+              Close
+            </Button>
+            <Button variant='ghost'>Secondary Action</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Box>
   )
 }
