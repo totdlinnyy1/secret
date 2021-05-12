@@ -6,8 +6,8 @@ import {Layout} from '../../modules'
 const Home = () => {
   return (
     <Layout>
-      <Box w='100%' display='flex' justifyContent='center' marginTop={20}>
-        <NewKeep />
+      <Box display='flex' justifyContent='center' marginTop={20}>
+          <NewKeep />
       </Box>
     </Layout>
   )

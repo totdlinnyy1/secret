@@ -2,6 +2,7 @@ import React, {FC} from 'react'
 import {
   Box,
   Button,
+  Collapse,
   Flex,
   Icon,
   Input,
@@ -9,139 +10,118 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalHeader,
-  ModalOverlay,
   Text,
-  Textarea,
   useDisclosure,
-  useToast,
 } from '@chakra-ui/react'
+import {useMediaQuery} from 'react-responsive'
 import {AttachmentIcon} from '@chakra-ui/icons'
 import {LockIcon} from '@chakra-ui/icons'
 import {RiArchiveDrawerLine} from 'react-icons/ri'
 import {FiMoreVertical} from 'react-icons/fi'
+import './NewKeep.sass'
 
 const NewKeep: FC = () => {
-  const {isOpen, onToggle, onClose} = useDisclosure()
-  const toast = useToast()
+  const {isOpen, onToggle, onOpen} = useDisclosure()
+  const isTablet = useMediaQuery({query: '(max-width: 599px)'})
+  const isMobile = useMediaQuery({query: '(max-width: 400px)'})
+
   return (
-    <>
-      <Box
+    <Box
         minWidth='270px'
-        width='50%'
+      w={isMobile ? '100%' : isTablet ? '98%' : '50%'}
+      mx='auto'
+    >
+      <Box
         h='60px'
         border='2px solid'
+        borderBottom={isOpen ? 'none' : '2px solid'}
         borderRadius='2px'
         cursor='pointer'
-        display='flex'
-        alignItems='center'
-        justifyContent='space-between'
-        px={5}
-        mx='auto'
         transition='0.3s'
-        _hover={{backgroundColor: 'gray.300'}}
-        onClick={onToggle}
+        _hover={isOpen ? undefined : {backgroundColor: 'gray.300'}}
+        onClick={onOpen}
       >
-        <Box>
-          <Text> Новая заметка...</Text>
-        </Box>
-        <Box>
-          <LockIcon />
-        </Box>
+        {isOpen ? (
+          <Flex
+            h='60px'
+            alignItems='center'
+            justifyContent='space-between'
+            p={5}
+          >
+            <Box>
+              <Input variant='unstyled' placeholder='Название...' />
+            </Box>
+            <Box>
+              <Button variant='ghost'>
+                <AttachmentIcon boxSize={6} />
+              </Button>
+            </Box>
+          </Flex>
+        ) : (
+          <Flex
+            h='60px'
+            px={5}
+            alignItems='center'
+            justifyContent='space-between'
+          >
+            <Box>
+              <Text> Новая заметка...</Text>
+            </Box>
+            <Box>
+              <LockIcon />
+            </Box>
+          </Flex>
+        )}
       </Box>
-      <Modal isOpen={isOpen} onClose={onClose} size='2xl'>
-        <ModalOverlay />
-        <ModalContent borderRadius='2px'>
-          <ModalHeader>
-            <Flex justifyContent='space-between'>
-              <Box w='90%'>
-                <Input placeholder='Название...' variant='unstyled' />
-              </Box>
-              <Box>
-                <Button variant='ghost'>
-                  <AttachmentIcon w={6} h={6} />
-                </Button>
-              </Box>
-            </Flex>
-          </ModalHeader>
-          <ModalBody>
+      <Collapse in={isOpen} animateOpacity>
+        <Flex
+          flexDirection='column'
+          justifyContent='space-between'
+          border='2px solid'
+          borderTop='none'
+          borderRadius='2px'
+        >
+          <div
+            className='textarea'
+            contentEditable={true}
+            data-placeholder='Заметка...'
+          />
+          <Flex
+            alignItems='center'
+            justifyContent='space-between'
+            px={5}
+            py={2}
+          >
             <Flex
-              flexDirection='column'
+              alignItems='center'
               justifyContent='space-between'
-              mt={5}
-              minHeight='500px'
-              maxHeight='700px'
             >
-              <Box h='450px'>
-                <Textarea
-                  height='400px'
-                  placeholder='Заметка...'
-                  resize='none'
-                  variant='unstyled'
-                />
-              </Box>
-              <Flex h='50px' justifyContent='space-between'>
-                <Box>
-                  <Flex
-                    alignItems='center'
-                    w='160px'
-                    justifyContent='space-between'
-                  >
-                    <Button variant='ghost'>
-                      <LockIcon />
-                    </Button>
-                    <Button variant='ghost'>
-                      <Icon as={RiArchiveDrawerLine} />
-                    </Button>
-                    <Menu>
-                      <MenuButton>
-                        <Button variant='ghost'>
-                          <Icon as={FiMoreVertical} />
-                        </Button>
-                      </MenuButton>
-                      <MenuList>
-                        <MenuItem
-                          onClick={() => {
-                            toast({
-                              title: 'Новая заметка удалена',
-                              status: 'info',
-                              variant: 'subtle',
-                              position: 'bottom-left',
-                            })
-                            onToggle()
-                          }}
-                        >
-                          <Text>Удалить</Text>
-                        </MenuItem>
-                      </MenuList>
-                    </Menu>
-                  </Flex>
-                </Box>
-                <Box>
-                  <Button
-                    variant='ghost'
-                    onClick={() => {
-                      toast({
-                        title: 'Новая заметка удалена',
-                        status: 'info',
-                        variant: 'subtle',
-                        position: 'bottom-left',
-                      })
-                      onToggle()
-                    }}
-                  >
-                    Закрыть
+              <Button variant='ghost'>
+                <LockIcon />
+              </Button>
+              <Button variant='ghost'>
+                <Icon as={RiArchiveDrawerLine} />
+              </Button>
+              <Menu>
+                <MenuButton>
+                  <Button variant='ghost'>
+                    <Icon as={FiMoreVertical} />
                   </Button>
-                </Box>
-              </Flex>
+                </MenuButton>
+                <MenuList>
+                  <MenuItem>
+                    <Text>Удалить</Text>
+                  </MenuItem>
+                </MenuList>
+              </Menu>
             </Flex>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
-    </>
+            <Button variant='ghost' onClick={onToggle}>
+              Закрыть
+            </Button>
+          </Flex>
+        </Flex>
+      </Collapse>
+    </Box>
   )
 }
 

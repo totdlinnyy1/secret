@@ -5,15 +5,7 @@ import {
   Flex,
   Heading,
   Image,
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalOverlay,
-  ModalCloseButton,
   useColorMode,
-  useDisclosure,
-  ModalBody,
-  ModalFooter,
 } from '@chakra-ui/react'
 import {useAuth} from '../../contexts/AuthContext'
 import logoDark from '../../img/logo.png'
@@ -23,34 +15,6 @@ const Auth = () => {
   const {login} = useAuth()
   const {colorMode} = useColorMode()
   const [loading, setLoading] = useState(false)
-
-  function BasicUsage() {
-    const {isOpen, onOpen, onClose} = useDisclosure()
-    return (
-      <>
-        <Button onClick={onOpen}>Open Modal</Button>
-
-        <Modal isOpen={isOpen} onClose={onClose}>
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader>Modal Title</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, accusamus accusantium, aperiam asperiores debitis dicta distinctio eius error fuga harum libero nostrum officia possimus quos reprehenderit sequi sint tempora vitae.
-            </ModalBody>
-
-            <ModalFooter>
-              <Button colorScheme='blue' mr={3} onClick={onClose}>
-                Close
-              </Button>
-              <Button variant='ghost'>Secondary Action</Button>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
-      </>
-    )
-  }
-
   return (
     <Box
       minWidth={270}
@@ -62,7 +26,6 @@ const Auth = () => {
       shadow='2xl'
       borderRadius='2px'
     >
-      {BasicUsage()}
       <Flex alignItems='center' w='100%' justifyContent='center'>
         <Box>
           {colorMode === 'light' ? (
