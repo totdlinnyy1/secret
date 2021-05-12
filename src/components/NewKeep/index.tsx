@@ -22,15 +22,10 @@ import './NewKeep.sass'
 
 const NewKeep: FC = () => {
   const {isOpen, onToggle, onOpen} = useDisclosure()
-  const isTablet = useMediaQuery({query: '(max-width: 599px)'})
-  const isMobile = useMediaQuery({query: '(max-width: 400px)'})
+  const isTabletOrMobile = useMediaQuery({query: '(max-width: 599px)'})
 
   return (
-    <Box
-        minWidth='270px'
-      w={isMobile ? '100%' : isTablet ? '98%' : '50%'}
-      mx='auto'
-    >
+    <Box minWidth='270px' w={isTabletOrMobile ? '98%' : '50%'} mx='auto'>
       <Box
         h='60px'
         border='2px solid'
@@ -92,10 +87,7 @@ const NewKeep: FC = () => {
             px={5}
             py={2}
           >
-            <Flex
-              alignItems='center'
-              justifyContent='space-between'
-            >
+            <Flex alignItems='center' justifyContent='space-between'>
               <Button variant='ghost'>
                 <LockIcon />
               </Button>

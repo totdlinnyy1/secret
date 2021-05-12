@@ -16,14 +16,12 @@ import {useAuth} from '../../../../contexts/AuthContext'
 const ProfileMenu: FC = () => {
   const {colorMode, toggleColorMode} = useColorMode()
   const {user, logout} = useAuth()
-  //@ts-ignore
-  const AVATAR: string | undefined = user?.photoURL
   return (
     <Menu>
       <MenuButton>
         <Avatar
-          name='Данил Балцевич'
-          src={AVATAR}
+          name={user?.displayName as string | undefined}
+          src={user?.photoURL as string | undefined}
           size='sm'
           border='2px solid #fff'
         />
