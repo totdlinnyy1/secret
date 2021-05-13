@@ -42,13 +42,14 @@ const NewKeep: FC<{uid: string}> = ({uid}) => {
   }, [title, keep])
 
   return (
-    <Box minWidth='270px' w={isTabletOrMobile ? '98%' : '50%'} mx='auto'>
+    <Box minWidth='270px' w={isTabletOrMobile ? '98%' : '50%'} mx='auto' transition='0.5s' shadow={isOpen ? '2xl' : undefined}>
       <form>
         <Box
           h='60px'
-          border='2px solid'
-          borderBottom={isOpen ? 'none' : '2px solid'}
-          borderRadius='2px'
+          border='1px solid'
+          borderBottom={isOpen ? 'none' : '1px solid'}
+          borderRadius='4px'
+          borderBottomRadius={isOpen ? '0' : '4px'}
           cursor='pointer'
           transition='0.3s'
           _hover={isOpen ? undefined : {backgroundColor: 'gray.300'}}

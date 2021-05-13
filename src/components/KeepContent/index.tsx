@@ -31,9 +31,10 @@ const KeepContent: FC<KeepContentProps> = ({onToggle, onChange, value}) => {
     <Flex
       flexDirection='column'
       justifyContent='space-between'
-      border='2px solid'
+      border='1px solid'
       borderTop='none'
-      borderRadius='2px'
+      borderRadius='4px'
+      borderTopRadius='0'
       maxWidth='830px'
     >
       <div

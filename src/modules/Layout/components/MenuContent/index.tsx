@@ -15,8 +15,8 @@ const MenuContent: FC = () => {
       <Box
         display='flex'
         alignItems='center'
-        border='2px solid'
-        borderRadius='2px'
+        border='1px solid'
+        borderRadius='4px'
         w='100%'
         h='40px'
         pl={3}
@@ -31,8 +31,8 @@ const MenuContent: FC = () => {
       <Box
         display='flex'
         alignItems='center'
-        border='2px solid'
-        borderRadius='2px'
+        border='1px solid'
+        borderRadius='4px'
         w='100%'
         h='40px'
         pl={3}
@@ -47,8 +47,8 @@ const MenuContent: FC = () => {
       <Box
         display='flex'
         alignItems='center'
-        border='2px solid'
-        borderRadius='2px'
+        border='1px solid'
+        borderRadius='4px'
         w='100%'
         h='40px'
         pl={3}
