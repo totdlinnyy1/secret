@@ -1,20 +1,5 @@
 import React, {useState} from 'react'
-import {
-  Box,
-  Button,
-  Flex,
-  Heading,
-  Image,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  useColorMode,
-  useDisclosure,
-} from '@chakra-ui/react'
+import {Box, Button, Flex, Heading, Image, useColorMode} from '@chakra-ui/react'
 import {useAuth} from '../../contexts/AuthContext'
 import logoDark from '../../img/logo.png'
 import logoLight from '../../img/logoLight.png'
@@ -23,7 +8,6 @@ const Auth = () => {
   const {login} = useAuth()
   const {colorMode} = useColorMode()
   const [loading, setLoading] = useState(false)
-  const {isOpen, onClose, onOpen} = useDisclosure()
   return (
     <Box p={3}>
       <Box
@@ -67,27 +51,6 @@ const Auth = () => {
           </Button>
         </Flex>
       </Box>
-      <Button onClick={onOpen}>Открыть Модал</Button>
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-            Accusantium, alias animi assumenda aut, culpa cumque dolorem enim
-            exercitationem laudantium libero minima nostrum omnis placeat
-            praesentium quod rerum saepe sapiente voluptate.
-          </ModalBody>
-
-          <ModalFooter>
-            <Button colorScheme='blue' mr={3} onClick={onClose}>
-              Close
-            </Button>
-            <Button variant='ghost'>Secondary Action</Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
     </Box>
   )
 }

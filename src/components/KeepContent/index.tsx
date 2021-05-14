@@ -18,13 +18,22 @@ interface KeepContentProps {
   onToggle: () => void
   onChange: React.Dispatch<React.SetStateAction<string | null>>
   value: string | null
+  existKeep: boolean
 }
 
-const KeepContent: FC<KeepContentProps> = ({onToggle, onChange, value}) => {
+const KeepContent: FC<KeepContentProps> = ({
+  onToggle,
+  onChange,
+  value,
+  existKeep,
+}) => {
   const textareaRef = useRef<HTMLDivElement>(null)
   useEffect(() => {
     if (!value) {
       textareaRef.current!.innerHTML = ''
+    }
+    if (value) {
+      textareaRef.current!.textContent = value
     }
   }, [value])
   return (
@@ -35,7 +44,6 @@ const KeepContent: FC<KeepContentProps> = ({onToggle, onChange, value}) => {
       borderTop='none'
       borderRadius='4px'
       borderTopRadius='0'
-      maxWidth='830px'
     >
       <div
         className='textarea'
@@ -43,6 +51,7 @@ const KeepContent: FC<KeepContentProps> = ({onToggle, onChange, value}) => {
         data-placeholder='Заметка...'
         onInput={e => onChange(e.currentTarget.innerHTML)}
         ref={textareaRef}
+        role='textbox'
       />
       <Flex alignItems='center' justifyContent='space-between' px={5} py={2}>
         <Flex alignItems='center' justifyContent='space-between'>

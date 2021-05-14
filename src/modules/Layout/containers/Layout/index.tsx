@@ -3,14 +3,14 @@ import {Box} from '@chakra-ui/react'
 import {DrawerMenu, Header, Menu} from '../../components'
 import MediaQuery from 'react-responsive'
 
-const Layout: FC = ({children}) => {
+const Layout: FC<{loading: boolean}> = ({children, loading}) => {
     const [isOpen, setOpen] = useState(false)
     const toggleDrawer = () => setOpen(!isOpen)
 
     return (
         <Box>
             <Box>
-                <Header toggleDrawer={toggleDrawer}/>
+                <Header toggleDrawer={toggleDrawer} loading={loading}/>
             </Box>
             <Box display='flex'>
                 <DrawerMenu isOpen={isOpen} onClose={toggleDrawer}/>

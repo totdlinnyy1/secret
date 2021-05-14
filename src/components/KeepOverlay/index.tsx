@@ -10,6 +10,7 @@ import {
   MenuItem,
   MenuList,
   Text,
+  useColorMode,
 } from '@chakra-ui/react'
 import {AttachmentIcon, CheckIcon, LockIcon} from '@chakra-ui/icons'
 import './KeepOverlay.sass'
@@ -17,21 +18,34 @@ import {RiArchiveDrawerLine} from 'react-icons/ri'
 import {FiMoreVertical} from 'react-icons/fi'
 
 interface KeepOverlayProps {
+  keepId: string
   title: string
   keep: string
+  deleteKeep: (keepId: string) => void
+  openKeep: (keepId: string) => void
 }
 
-const KeepOverlay: FC<KeepOverlayProps> = ({title, keep}) => {
+const KeepOverlay: FC<KeepOverlayProps> = ({
+  keepId,
+  title,
+  keep,
+  deleteKeep,
+  openKeep,
+}) => {
+  const {colorMode} = useColorMode()
   return (
     <Flex
       shadow='md'
       minWidth='256px'
+      maxWidth='450px'
       minHeight='153px'
       borderRadius='4px'
+      maxHeight='350px'
       m={4}
       p={2}
       transition='0.2s'
-      _hover={{shadow: '2xl'}}
+      border={colorMode === 'dark' ? '1px solid' : undefined}
+      _hover={{shadow: '2xl', border: '1px solid'}}
       position='relative'
       className='overlay'
       justifyContent='space-between'
@@ -49,35 +63,37 @@ const KeepOverlay: FC<KeepOverlayProps> = ({title, keep}) => {
         <Box position='absolute' top='-10px' left='-10px' className='checkbox'>
           <Checkbox icon={<CheckIcon />} size='lg' />
         </Box>
-        <Box>
-          <Text fontWeight='bold'>{title}</Text>
+        <Box minHeight='100px' onClick={() => openKeep(keepId)}>
+          <Box pointerEvents='none'>
+            <Text fontWeight='bold'>{title}</Text>
+          </Box>
+          <Box pointerEvents='none' maxHeight='270px' overflow='hidden'>
+            <div dangerouslySetInnerHTML={{__html: keep}} />
+          </Box>
         </Box>
-        <Box>
-          <div dangerouslySetInnerHTML={{__html: keep}} />
-        </Box>
-      </Box>
-      <Flex alignItems='center' justifyContent='flex-end' className='actions'>
-        <Flex alignItems='center' justifyContent='space-between'>
-          <Button variant='ghost'>
-            <LockIcon />
-          </Button>
-          <Button variant='ghost'>
-            <Icon as={RiArchiveDrawerLine} />
-          </Button>
-          <Menu>
-            <MenuButton>
-              <Button variant='ghost'>
-                <Icon as={FiMoreVertical} />
-              </Button>
-            </MenuButton>
-            <MenuList>
-              <MenuItem>
-                <Text>Удалить</Text>
-              </MenuItem>
-            </MenuList>
-          </Menu>
+        <Flex alignItems='center' justifyContent='flex-end' className='actions'>
+          <Flex alignItems='center' justifyContent='space-between'>
+            <Button variant='ghost'>
+              <LockIcon />
+            </Button>
+            <Button variant='ghost'>
+              <Icon as={RiArchiveDrawerLine} />
+            </Button>
+            <Menu>
+              <MenuButton>
+                <Button variant='ghost'>
+                  <Icon as={FiMoreVertical} />
+                </Button>
+              </MenuButton>
+              <MenuList>
+                <MenuItem onClick={() => deleteKeep(keepId)}>
+                  <Text>Удалить</Text>
+                </MenuItem>
+              </MenuList>
+            </Menu>
+          </Flex>
         </Flex>
-      </Flex>
+      </Box>
     </Flex>
   )
 }

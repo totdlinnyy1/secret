@@ -1,16 +1,19 @@
 import React, {FC} from 'react'
 import MediaQuery from 'react-responsive'
-import {Box, Button, Image, useColorMode} from '@chakra-ui/react'
-import {CheckIcon, MoonIcon, SunIcon} from '@chakra-ui/icons'
+import {Box, Button, Icon, Image, useColorMode} from '@chakra-ui/react'
+import {SunIcon} from '@chakra-ui/icons'
+import {IoCloudDoneOutline} from 'react-icons/io5'
+import {BiMoon} from 'react-icons/bi'
 import {Search, ProfileMenu} from '../index'
 import logoDark from '../../../../img/logo.png'
 import logoLight from '../../../../img/logoLight.png'
 
 type HeaderProps = {
-  toggleDrawer: any
+  toggleDrawer: () => void
+  loading: boolean
 }
 
-const Header: FC<HeaderProps> = ({toggleDrawer}) => {
+const Header: FC<HeaderProps> = ({toggleDrawer, loading}) => {
   const {colorMode, toggleColorMode} = useColorMode()
   return (
     <Box w='100%'>
@@ -28,18 +31,18 @@ const Header: FC<HeaderProps> = ({toggleDrawer}) => {
         <MediaQuery minDeviceWidth={600}>
           <Box ml='auto' display='flex' alignItems='center'>
             <Box mr={1} cursor='pointer'>
-              <Button variant='ghost'>
-                <CheckIcon boxSize={6} />
+              <Button variant='ghost' isLoading={loading} disabled={true}>
+                <Icon as={IoCloudDoneOutline} boxSize={6} />
               </Button>
             </Box>
             <Box onClick={toggleColorMode} mr={1} cursor='pointer'>
               {colorMode === 'light' ? (
                 <Button variant='ghost'>
-                  <MoonIcon boxSize={6} />
+                  <SunIcon boxSize={6} />
                 </Button>
               ) : (
                 <Button variant='ghost'>
-                  <SunIcon boxSize={6} />
+                  <Icon as={BiMoon} boxSize={6} />
                 </Button>
               )}
             </Box>

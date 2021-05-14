@@ -6,7 +6,11 @@ import KeepContent from '../KeepContent'
 import KeepName from '../KeepName'
 import {db} from '../../utils/firebase'
 
-const NewKeep: FC<{uid: string}> = ({uid}) => {
+const NewKeep: FC<{uid: string; getKeeps: any; setLoading: any}> = ({
+  uid,
+  getKeeps,
+  setLoading,
+}) => {
   const {isOpen, onToggle, onOpen} = useDisclosure()
   const isTabletOrMobile = useMediaQuery({query: '(max-width: 599px)'})
   const [postId, setPostId] = useState<string>('1')
@@ -14,26 +18,28 @@ const NewKeep: FC<{uid: string}> = ({uid}) => {
   const [keep, setKeep] = useState<string | null>(null)
 
   const submit = async () => {
+    setLoading(true)
     if (title || keep) {
       const keepsRef = db.doc('users/' + uid)
       if (postId === '1') {
         return await keepsRef
-            .collection('keeps')
-            .add({
-              title,
-              keep,
-            })
-            .then(docRef => setPostId(docRef.id))
-            .catch(console.error)
-      } else  {
+          .collection('keeps')
+          .add({
+            title,
+            keep,
+          })
+          .then(docRef => setPostId(docRef.id))
+          .catch(console.error)
+      } else {
         return await keepsRef
-            .collection('keeps')
-            .doc(postId)
-            .set({title, keep})
-            .then(console.log)
-            .catch(console.error)
+          .collection('keeps')
+          .doc(postId)
+          .set({title, keep})
+          .then(console.log)
+          .catch(console.error)
       }
     }
+    setLoading(false)
   }
 
   useEffect(() => {
@@ -42,7 +48,7 @@ const NewKeep: FC<{uid: string}> = ({uid}) => {
   }, [title, keep])
 
   return (
-    <Box minWidth='270px' w={isTabletOrMobile ? '98%' : '50%'} mx='auto' transition='0.5s' shadow={isOpen ? '2xl' : undefined}>
+    <Box minWidth='270px' w={isTabletOrMobile ? '98%' : '50%'} mx='auto'>
       <form>
         <Box
           h='60px'
@@ -75,7 +81,10 @@ const NewKeep: FC<{uid: string}> = ({uid}) => {
         </Box>
         <Collapse in={isOpen} animateOpacity>
           <KeepContent
-            onToggle={() => {
+            onToggle={async () => {
+              if (keep || title) {
+                getKeeps()
+              }
               onToggle()
               setKeep(null)
               setTitle(null)
@@ -83,6 +92,7 @@ const NewKeep: FC<{uid: string}> = ({uid}) => {
             }}
             onChange={setKeep}
             value={keep}
+            existKeep={false}
           />
         </Collapse>
       </form>

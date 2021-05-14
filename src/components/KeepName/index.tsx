@@ -10,8 +10,10 @@ interface KeepNameProps {
 const KeepName: FC<KeepNameProps> = ({onChange, value}) => {
   return (
     <Flex h='60px' alignItems='center' justifyContent='space-between' p={5}>
-      <Box>
+      <Box w='90%'>
         <Input
+          w='100%'
+          maxLength={40}
           value={value as string}
           variant='unstyled'
           placeholder='Название...'
